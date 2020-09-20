@@ -28,7 +28,7 @@ void read_input(ifstream& input_file_stream) //O(n lg n)
 	sort(given_words.begin(), given_words.end());
 }
 
-void find_possible_words() //Worst: O(n^2)	Average: O(n)
+void find_possible_words() //Worst: O(n^2)	Expected: O(n)
 {
 	int current_index = 0;
 	pair<int, int> index_given_word_length;
@@ -102,9 +102,48 @@ bool valid_index(int index, pair<int, int>* index_given_word_length)
 	return true;
 }
 
-void solve() //O(n)
+void solve() //Worst: O(n^4)	Expected: O(n)
 {
+	bool solved_all_words = false;
+	while (!solved_all_words)
+	{
+		solved_all_words = true;
 
+		for (unkown_word& word : unkown_words)
+		{
+			bool word_already_solved = word.solved;
+			if (word_already_solved)
+			{
+				continue;
+			}
+
+			bool one_possibility = word.possible_words.size() == 1;
+			if (one_possibility)
+			{
+				word.solution = word.possible_words[0];
+				word.solution->assigned = true;
+				word.solved = true;
+			}
+
+			else
+			{
+				solved_all_words = false;
+
+				for (int index = 0; index < word.possible_words.size(); index++)
+				{
+					given_word* possible_word = word.possible_words[index];
+
+					bool already_assigned = (*possible_word).assigned;
+					if (already_assigned)
+					{
+						word.possible_words.erase(word.possible_words.begin() + index);
+					}
+				}
+
+			}
+
+		}
+	}
 }
 
 void print_solution() //O(n)

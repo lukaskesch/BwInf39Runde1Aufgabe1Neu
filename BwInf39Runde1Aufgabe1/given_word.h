@@ -10,10 +10,11 @@ class given_word
 	//Variables
 private:
 	int length;
-	bool assigned;
 	string word;
 	map<int, int> umlaut_identifiers;
 public:
+	bool assigned;
+
 
 	//Methods
 private:

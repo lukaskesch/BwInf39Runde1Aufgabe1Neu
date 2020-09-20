@@ -23,6 +23,7 @@ private:
 public:
 	vector<given_word*> possible_words;
 	given_word* solution = nullptr;
+	bool solved = false;
 
 	static vector<pair<int, int>> letter_intervals;
 	static vector<pair<int, int>> symbol_intervals;
