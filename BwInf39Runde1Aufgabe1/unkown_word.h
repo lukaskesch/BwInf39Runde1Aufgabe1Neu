@@ -24,6 +24,7 @@ public:
 	vector<given_word*> possible_words;
 	given_word* solution = nullptr;
 	bool solved = false;
+	int index_in_output;
 
 	static vector<pair<int, int>> letter_intervals;
 	static vector<pair<int, int>> symbol_intervals;
@@ -44,7 +45,7 @@ private:
 	}
 
 public:
-	unkown_word(string input);
+	unkown_word(string input, int index);
 
 	string print();
 	int get_length();

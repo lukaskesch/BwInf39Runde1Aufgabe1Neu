@@ -4,8 +4,9 @@ vector<pair<int, int>> unkown_word::letter_intervals;
 vector<pair<int, int>> unkown_word::symbol_intervals;
 
 
-unkown_word::unkown_word(string input)
+unkown_word::unkown_word(string input, int index)
 {
+	index_in_output = index;
 	for (int i = 0; i < input.length(); i++)
 	{
 		char current_char = input[i];
@@ -48,7 +49,7 @@ unkown_word::unkown_word(string input)
 
 string unkown_word::print()
 {
-	return (*solution).get_word().append(postfix);
+	return (*solution).print_word().append(postfix);
 }
 
 int unkown_word::get_length()

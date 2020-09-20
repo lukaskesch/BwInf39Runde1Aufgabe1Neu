@@ -2,6 +2,8 @@
 
 #include <string>
 #include <map>
+#include <sstream>
+
 
 using namespace std;
 
@@ -22,10 +24,10 @@ private:
 public:
 	given_word(string word);
 
-	void set_assigned(bool assigned);
-	bool get_assigned();
 	int get_length();
 	string get_word();
+	string print_word();
+	string get_umlaut(int identifier);
 	int get_umlaut_code(int index);
 
 	friend bool operator<(given_word word_1, given_word word_2)

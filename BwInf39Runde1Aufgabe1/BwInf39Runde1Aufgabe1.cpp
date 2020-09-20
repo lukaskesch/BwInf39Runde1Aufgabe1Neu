@@ -8,15 +8,18 @@ void print_user_greetings() //O(1)
 
 void read_input(ifstream& input_file_stream) //O(n lg n)
 {
+	int number = 0;
 	string line, word;
 
 	getline(input_file_stream, line);
 	stringstream input_stream_line_1(line);
 	while (input_stream_line_1 >> word)
 	{
-		unkown_words.push_back(unkown_word(word));
+		unkown_words.push_back(unkown_word(word, number++));
+		solution.push_back("");
 	}
-	solution = unkown_words;
+
+	/*fill_pointer_vector();*/
 	sort(unkown_words.begin(), unkown_words.end());
 
 	getline(input_file_stream, line);
@@ -27,6 +30,14 @@ void read_input(ifstream& input_file_stream) //O(n lg n)
 	}
 	sort(given_words.begin(), given_words.end());
 }
+
+//void fill_pointer_vector() //O(n)
+//{
+//	for (unkown_word& word : unkown_words)
+//	{
+//		solution.push_back(&word);
+//	}
+//}
 
 void find_possible_words() //Worst: O(n^2)	Expected: O(n)
 {
@@ -123,6 +134,9 @@ void solve() //Worst: O(n^4)	Expected: O(n)
 				word.solution = word.possible_words[0];
 				word.solution->assigned = true;
 				word.solved = true;
+
+				int index_in_solution = word.index_in_output;
+				solution[index_in_solution] = word.print();
 			}
 
 			else
@@ -151,8 +165,7 @@ void print_solution() //O(n)
 	stringstream output;
 	for (int i = 0; i < solution.size(); i++)
 	{
-		unkown_word word = solution[i];
-		output << word.print();
+		output << solution[i] << " ";
 	}
 	cout << output.str();
 }
@@ -171,18 +184,12 @@ int main()
 
 	for (int i = 0; i < number_of_tests; i++)
 	{
+		//i = 1;
 		string file_name = "examples/raetsel";
 		file_name.append(to_string(i));
 		file_name.append(".txt");
 		cout << endl << "file: " << file_name << endl;
 		ifstream input_file_stream(file_name);
-
-		/*string line;
-		getline(input_file_stream, line);
-		cout << line << "\nTest";
-
-		getline(cin, line);*/
-
 
 		read_input(input_file_stream);
 		find_possible_words();

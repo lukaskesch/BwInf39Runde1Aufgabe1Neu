@@ -21,16 +21,6 @@ given_word::given_word(string word)
 	assigned = false;
 }
 
-void given_word::set_assigned(bool assigned)
-{
-	this->assigned = assigned;
-}
-
-bool given_word::get_assigned()
-{
-	return assigned;
-}
-
 int given_word::get_length()
 {
 	return length;
@@ -40,6 +30,33 @@ string given_word::get_word()
 {
 	return word;
 }
+
+string given_word::print_word()
+{
+	stringstream sstream;
+	for (int i = 0; i < word.size(); i++)
+	{
+		bool is_umlaut = word[i] == '$';
+		if (is_umlaut)
+		{
+			int umlaut_code = get_umlaut_code(i);
+			sstream << get_umlaut(umlaut_code);
+		}
+		else
+		{
+			sstream << word[i];
+		}
+	}
+
+	return sstream.str();
+}
+
+string get_umlaut(int identifier)
+{
+	//Implement switch statement
+
+}
+
 
 int given_word::get_umlaut_code(int index)
 {

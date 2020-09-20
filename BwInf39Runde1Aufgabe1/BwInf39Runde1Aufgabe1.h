@@ -16,10 +16,11 @@ using namespace std;
 const int number_of_tests = 5;
 vector<given_word> given_words;
 vector<unkown_word> unkown_words;
-vector<unkown_word> solution;
+vector<string> solution;
 
 //Methods
 void print_user_greetings();
+//void fill_pointer_vector();
 void read_input(ifstream& input_file_stream);
 void find_possible_words();
 void solve();
