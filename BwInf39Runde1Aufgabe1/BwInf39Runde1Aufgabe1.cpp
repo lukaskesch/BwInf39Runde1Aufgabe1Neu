@@ -61,7 +61,7 @@ void find_possible_words() //Worst: O(n^2)	Average: O(n)
 
 			if (char_matches || no_given_char)
 			{
-				unkown_words[index2].possible_words.push_back(given_word_object);
+				unkown_words[index2].possible_words.push_back(&given_word_object);
 			}
 		}
 	}

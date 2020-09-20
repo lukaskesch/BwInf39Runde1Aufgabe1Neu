@@ -23,16 +23,16 @@ private:
 		for (int i = 0; i < intervals.size(); i++)
 		{
 			bool out_of_bounce = number < intervals[i].first || number > intervals[i].second;
-			if (out_of_bounce)
+			if (!out_of_bounce)
 			{
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 public:
-	vector<given_word> possible_words;
+	vector<given_word*> possible_words;
 	given_word solution;
 
 	static vector<pair<int, int>> letter_intervals;
@@ -53,7 +53,6 @@ public:
 
 	static void preparation() {
 		letter_intervals.push_back(pair<int, int>(0, 0));
-
 		letter_intervals.push_back(pair<int, int>(65, 90));
 		letter_intervals.push_back(pair<int, int>(97, 122));
 

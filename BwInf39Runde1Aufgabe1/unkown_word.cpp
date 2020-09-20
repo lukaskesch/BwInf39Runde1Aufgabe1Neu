@@ -15,6 +15,7 @@ vector<pair<int, int>> unkown_word::symbol_intervals;
 unkown_word::unkown_word(string input)
 {
 	index_given_char = -1;
+	given_character = ' ';
 
 	for (int i = 0; i < input.length(); i++)
 	{
@@ -24,7 +25,7 @@ unkown_word::unkown_word(string input)
 			continue;
 		}
 
-		int asci_code = (int)current_char;
+		int asci_code = static_cast<unsigned char>(current_char);
 
 		bool is_letter = is_in_intervals(letter_intervals, asci_code);
 		if (is_letter)
