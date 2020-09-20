@@ -11,13 +11,24 @@ using namespace std;
 
 class unkown_word
 {
+
+	//Variables
 private:
-	int length, index_given_char;
+	int length = 0;
+	int index_given_char = -1;
 	char given_character = ' ';
 	string postfix = "";
 	map<int, int> umlaut_identifiers;
 
+public:
+	vector<given_word*> possible_words;
+	given_word* solution = nullptr;
 
+	static vector<pair<int, int>> letter_intervals;
+	static vector<pair<int, int>> symbol_intervals;
+
+	//Methods
+private:
 	static bool is_in_intervals(vector<pair<int, int>> intervals, int number)
 	{
 		for (int i = 0; i < intervals.size(); i++)
@@ -32,19 +43,14 @@ private:
 	}
 
 public:
-	vector<given_word*> possible_words;
-	given_word solution;
-
-	static vector<pair<int, int>> letter_intervals;
-	static vector<pair<int, int>> symbol_intervals;
-
 	unkown_word(string input);
 
 	string print();
-
 	int get_length();
 	int get_index_given_char();
 	char get_given_char();
+	int get_umlaut_code(int index);
+
 
 	friend bool operator<(unkown_word word_1, unkown_word word_2)
 	{
@@ -60,4 +66,5 @@ public:
 		symbol_intervals.push_back(pair<int, int>(91, 96));
 		symbol_intervals.push_back(pair<int, int>(123, 126));
 	}
+
 };

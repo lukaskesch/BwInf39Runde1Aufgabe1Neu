@@ -1,7 +1,5 @@
 #include "BwInf39Runde1Aufgabe1.h"
 
-using namespace std;
-
 void print_user_greetings() //O(1)
 {
 	cout << "Hello there!" << endl;
@@ -39,36 +37,74 @@ void find_possible_words() //Worst: O(n^2)	Average: O(n)
 
 	for (int index1 = 0; index1 < given_words.size(); index1++)
 	{
-		given_word given_word_object = given_words[index1];
+		given_word* given_word_object = &(given_words[index1]);
 
-		bool change_in_word_length = index_given_word_length.second != given_word_object.get_length();
+		bool change_in_word_length = index_given_word_length.second != (*given_word_object).get_length();
 		if (change_in_word_length)
 		{
 			index_given_word_length.first = index1;
-			index_given_word_length.second = given_word_object.get_length();
+			index_given_word_length.second = (*given_word_object).get_length();
 		}
 
 		int index2 = index_given_word_length.first;
-		for (index2; index_given_word_length.second == unkown_words[index2].get_length(); index2++)
+		for (index2; valid_index(index2, &index_given_word_length); index2++)
 		{
-			char given_char = unkown_words[index2].get_given_char();
-			int index_given_char = unkown_words[index2].get_index_given_char();
+			unkown_word* unkown_word_object = &(unkown_words[index2]);
 
-			string word = given_word_object.get_word();
+			char given_char = (*unkown_word_object).get_given_char();
+			int index_given_char = (*unkown_word_object).get_index_given_char();
+
+			string word = (*given_word_object).get_word();
+
+			bool no_given_char = given_char == ' ';
+			if (no_given_char)
+			{
+				unkown_words[index2].possible_words.push_back(given_word_object);
+				continue;
+			}
 
 			bool char_matches = given_char == word[index_given_char];
-			bool no_given_char = given_char == ' ';
+			bool is_umlaut = given_char == '$';
 
-			if (char_matches || no_given_char)
+			if (char_matches && is_umlaut)
 			{
-				unkown_words[index2].possible_words.push_back(&given_word_object);
+				int umlaut_code1 = (*unkown_word_object).get_umlaut_code(index_given_char);
+				int umlaut_code2 = (*given_word_object).get_umlaut_code(index_given_char);
+				bool umlaut_matches = umlaut_code1 == umlaut_code2;
+
+				if (umlaut_matches)
+				{
+					unkown_words[index2].possible_words.push_back(given_word_object);
+				}
+			}
+			else if (char_matches)
+			{
+				unkown_words[index2].possible_words.push_back(given_word_object);
 			}
 		}
 	}
 }
 
+bool valid_index(int index, pair<int, int>* index_given_word_length)
+{
+	bool out_of_bounce = index >= unkown_words.size();
+	if (out_of_bounce)
+	{
+		return false;
+	}
+
+	bool change_in_word_length = (*index_given_word_length).second != unkown_words[index].get_length();
+	if (change_in_word_length)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void solve() //O(n)
 {
+
 }
 
 void print_solution() //O(n)
@@ -108,11 +144,12 @@ int main()
 
 		getline(cin, line);*/
 
+
 		read_input(input_file_stream);
 		find_possible_words();
 		solve();
 		print_solution();
-
+		cleanup();
 
 		return 0;
 	}

@@ -1,12 +1,4 @@
-#include <string>
-#include <vector>
-#include <map>
-#include <iostream>
-
 #include "unkown_word.h"
-#include "given_word.h"
-
-using namespace std;
 
 vector<pair<int, int>> unkown_word::letter_intervals;
 vector<pair<int, int>> unkown_word::symbol_intervals;
@@ -14,9 +6,6 @@ vector<pair<int, int>> unkown_word::symbol_intervals;
 
 unkown_word::unkown_word(string input)
 {
-	index_given_char = -1;
-	given_character = ' ';
-
 	for (int i = 0; i < input.length(); i++)
 	{
 		char current_char = input[i];
@@ -59,7 +48,7 @@ unkown_word::unkown_word(string input)
 
 string unkown_word::print()
 {
-	return solution.get_word().append(postfix);
+	return (*solution).get_word().append(postfix);
 }
 
 int unkown_word::get_length()
@@ -73,5 +62,10 @@ int unkown_word::get_index_given_char()
 char unkown_word::get_given_char()
 {
 	return given_character;
+}
+
+int unkown_word::get_umlaut_code(int index)
+{
+	return this->umlaut_identifiers[index];
 }
 

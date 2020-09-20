@@ -1,8 +1,5 @@
 #include "given_word.h"
 
-given_word::given_word()
-{
-}
 
 given_word::given_word(string word)
 {
@@ -42,4 +39,9 @@ int given_word::get_length()
 string given_word::get_word()
 {
 	return word;
+}
+
+int given_word::get_umlaut_code(int index)
+{
+	return this->umlaut_identifiers[index];
 }
