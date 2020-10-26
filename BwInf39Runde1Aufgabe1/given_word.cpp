@@ -31,30 +31,43 @@ string given_word::get_word()
 	return word;
 }
 
-string given_word::print_word()
+wstring given_word::print_word()
 {
 	stringstream sstream;
+	std::wstringstream ws;
 	for (int i = 0; i < word.size(); i++)
 	{
 		bool is_umlaut = word[i] == '$';
 		if (is_umlaut)
 		{
 			int umlaut_code = get_umlaut_code(i);
-			sstream << get_umlaut(umlaut_code);
+			//sstream << get_umlaut(umlaut_code);
+
+			ws << get_umlaut(umlaut_code);
 		}
 		else
 		{
-			sstream << word[i];
+			//sstream << word[i];
+
+			ws << word[i];
 		}
 	}
-
-	return sstream.str();
+	//return sstream.str();
+	return ws.str();
 }
 
-string get_umlaut(int identifier)
+wstring given_word::get_umlaut(int identifier)
 {
-	//Implement switch statement
-
+	switch (identifier)
+	{
+	case 188: return L"\x81";
+	case 164: return L"\x84";
+	case 182: return L"\x94";
+	case 156: return L"\x9A";
+	case 132: return L"\x8E";
+	case 150: return L"\x99";
+	default: return L"";
+	}
 }
 
 

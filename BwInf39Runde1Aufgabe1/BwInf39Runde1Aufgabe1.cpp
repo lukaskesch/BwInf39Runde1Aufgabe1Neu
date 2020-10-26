@@ -16,7 +16,7 @@ void read_input(ifstream& input_file_stream) //O(n lg n)
 	while (input_stream_line_1 >> word)
 	{
 		unkown_words.push_back(unkown_word(word, number++));
-		solution.push_back("");
+		solution.push_back(L"");
 	}
 
 	/*fill_pointer_vector();*/
@@ -162,12 +162,12 @@ void solve() //Worst: O(n^4)	Expected: O(n)
 
 void print_solution() //O(n)
 {
-	stringstream output;
+	wstringstream output;
 	for (int i = 0; i < solution.size(); i++)
 	{
-		output << solution[i] << " ";
+		output << solution[i] << L" ";
 	}
-	cout << output.str();
+	wcout << output.str();
 }
 
 void cleanup() //O(n)

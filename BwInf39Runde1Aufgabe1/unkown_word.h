@@ -17,7 +17,7 @@ private:
 	int length = 0;
 	int index_given_char = -1;
 	char given_character = ' ';
-	string postfix = "";
+	wstring postfix = L"";
 	map<int, int> umlaut_identifiers;
 
 public:
@@ -47,7 +47,7 @@ private:
 public:
 	unkown_word(string input, int index);
 
-	string print();
+	wstring print();
 	int get_length();
 	int get_index_given_char();
 	char get_given_char();

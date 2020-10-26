@@ -16,7 +16,7 @@ using namespace std;
 const int number_of_tests = 5;
 vector<given_word> given_words;
 vector<unkown_word> unkown_words;
-vector<string> solution;
+vector<wstring> solution;
 
 //Methods
 void print_user_greetings();

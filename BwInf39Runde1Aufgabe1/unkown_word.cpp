@@ -47,7 +47,7 @@ unkown_word::unkown_word(string input, int index)
 	length = input.length();
 }
 
-string unkown_word::print()
+wstring unkown_word::print()
 {
 	return (*solution).print_word().append(postfix);
 }
