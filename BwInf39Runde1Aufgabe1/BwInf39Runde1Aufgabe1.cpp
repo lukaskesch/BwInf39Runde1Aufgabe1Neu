@@ -19,7 +19,6 @@ void read_input(ifstream& input_file_stream) //O(n lg n)
 		solution.push_back(L"");
 	}
 
-	/*fill_pointer_vector();*/
 	sort(unkown_words.begin(), unkown_words.end());
 
 	getline(input_file_stream, line);
@@ -31,13 +30,6 @@ void read_input(ifstream& input_file_stream) //O(n lg n)
 	sort(given_words.begin(), given_words.end());
 }
 
-//void fill_pointer_vector() //O(n)
-//{
-//	for (unkown_word& word : unkown_words)
-//	{
-//		solution.push_back(&word);
-//	}
-//}
 
 void find_possible_words() //Worst: O(n^2)	Expected: O(n)
 {
@@ -96,7 +88,7 @@ void find_possible_words() //Worst: O(n^2)	Expected: O(n)
 	}
 }
 
-bool valid_index(int index, pair<int, int>* index_given_word_length)
+bool valid_index(int index, pair<int, int>* index_given_word_length) //O(1)
 {
 	bool out_of_bounce = index >= unkown_words.size();
 	if (out_of_bounce)
@@ -113,50 +105,61 @@ bool valid_index(int index, pair<int, int>* index_given_word_length)
 	return true;
 }
 
-void solve() //Worst: O(n^4)	Expected: O(n)
+void solve(int number) //O(n!)
 {
-	bool solved_all_words = false;
-	while (!solved_all_words)
+	bool reached_end = number >= unkown_words.size();
+	if (reached_end && check_solution())
 	{
-		solved_all_words = true;
+		save_solution();
+		return;
+	}
+	else if (reached_end)
+	{
+		return;
+	}
 
-		for (unkown_word& word : unkown_words)
+	unkown_word* word = &unkown_words[number];
+
+	for (int i = 0; i < (*word).possible_words.size(); i++)
+	{
+		given_word* possible_word = (*word).possible_words[i];
+
+		bool already_assigned = (*possible_word).assigned;
+
+		if (already_assigned)
 		{
-			bool word_already_solved = word.solved;
-			if (word_already_solved)
-			{
-				continue;
-			}
-
-			bool one_possibility = word.possible_words.size() == 1;
-			if (one_possibility)
-			{
-				word.solution = word.possible_words[0];
-				word.solution->assigned = true;
-				word.solved = true;
-
-				int index_in_solution = word.index_in_output;
-				solution[index_in_solution] = word.print();
-			}
-
-			else
-			{
-				solved_all_words = false;
-
-				for (int index = 0; index < word.possible_words.size(); index++)
-				{
-					given_word* possible_word = word.possible_words[index];
-
-					bool already_assigned = (*possible_word).assigned;
-					if (already_assigned)
-					{
-						word.possible_words.erase(word.possible_words.begin() + index);
-					}
-				}
-
-			}
-
+			continue;
 		}
+		else
+		{
+			(*possible_word).assigned = true;
+			(*word).solution = possible_word;
+			solve(number + 1);
+			(*word).solution = nullptr;
+			(*possible_word).assigned = false;
+		}
+	}
+}
+
+bool check_solution() //O(n)
+{
+	for (given_word& word : given_words)
+	{
+		bool not_used = !(word.assigned);
+		if (not_used)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void save_solution() //O(n)
+{
+	for (unkown_word& word : unkown_words)
+	{
+		int index_in_solution = word.index_in_output;
+		solution[index_in_solution] = word.print();
 	}
 }
 
@@ -167,7 +170,7 @@ void print_solution() //O(n)
 	{
 		output << solution[i] << L" ";
 	}
-	wcout << output.str();
+	wcout << output.str() << endl;
 }
 
 void cleanup() //O(n)
@@ -184,7 +187,6 @@ int main()
 
 	for (int i = 0; i < number_of_tests; i++)
 	{
-		//i = 1;
 		string file_name = "examples/raetsel";
 		file_name.append(to_string(i));
 		file_name.append(".txt");
@@ -193,11 +195,10 @@ int main()
 
 		read_input(input_file_stream);
 		find_possible_words();
-		solve();
+		solve(0);
 		print_solution();
 		cleanup();
 
-		return 0;
 	}
 	return 0;
 }
