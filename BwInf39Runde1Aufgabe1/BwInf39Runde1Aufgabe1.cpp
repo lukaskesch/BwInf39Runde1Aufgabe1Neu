@@ -198,7 +198,10 @@ int main()
 		solve(0);
 		print_solution();
 		cleanup();
-
 	}
+
+	string dummy;
+	cin >> dummy;
+
 	return 0;
 }

@@ -20,13 +20,11 @@ vector<wstring> solution;
 
 //Methods
 void print_user_greetings();
-//void fill_pointer_vector();
 void read_input(ifstream& input_file_stream);
 void find_possible_words();
 void solve(int number);
 bool check_solution();
 void save_solution();
-void stolve();
 void print_solution();
 void cleanup();
 int main();
