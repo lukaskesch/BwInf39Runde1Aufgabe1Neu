@@ -6,6 +6,7 @@
 #include <sstream>
 #include <fstream>
 #include <algorithm>
+#include <chrono>  // for high_resolution_clock
 
 #include "given_word.h"
 #include "unkown_word.h"
@@ -13,6 +14,8 @@
 using namespace std;
 
 //Variables
+auto start_time = std::chrono::high_resolution_clock::now();
+auto finish_time = std::chrono::high_resolution_clock::now();
 const int number_of_tests = 5;
 vector<given_word> given_words;
 vector<unkown_word> unkown_words;

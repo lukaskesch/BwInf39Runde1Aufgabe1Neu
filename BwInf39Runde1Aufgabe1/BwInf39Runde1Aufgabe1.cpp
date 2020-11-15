@@ -165,6 +165,9 @@ void save_solution() //O(n)
 
 void print_solution() //O(n)
 {
+	chrono::duration<double> elapsed = finish_time - start_time;
+	cout << "Elapsed time: " << elapsed.count() << " s" << endl;
+
 	wstringstream output;
 	for (int i = 0; i < solution.size(); i++)
 	{
@@ -194,8 +197,12 @@ int main()
 		ifstream input_file_stream(file_name);
 
 		read_input(input_file_stream);
+
+		start_time = chrono::high_resolution_clock::now();
 		find_possible_words();
 		solve(0);
+		finish_time = chrono::high_resolution_clock::now();
+
 		print_solution();
 		cleanup();
 	}
